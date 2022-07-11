@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Prod;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Auth;
 
@@ -32,5 +33,9 @@ class CategoryController extends Controller
     }
     public function settingSave(Request $request) {
         $sort = $request->input('sort');//Получаем отсортированный список id
+        $user = auth()->user();
+        DB::table('users')
+            ->where('id', $user->id)
+            ->update(['sort' => $sort]);
     }
 }
